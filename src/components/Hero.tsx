@@ -4,7 +4,10 @@ import { useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LazyVideo from "./LazyVideo";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const container = useRef<HTMLDivElement>(null);
@@ -72,7 +75,7 @@ export default function Hero() {
       <div className="hero-bg-container absolute inset-0 z-0">
         <LazyVideo
           src="https://player.vimeo.com/external/517090025.hd.mp4?s=2540d5883d6a6a12003c4f74d49d97d91e3e7f9c&profile_id=175"
-          poster="/hero-bg.png"
+          poster="/hero-bg.jpeg"
           className="opacity-40 grayscale brightness-75"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-black/60 to-black/20" />

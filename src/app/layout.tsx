@@ -24,6 +24,9 @@ const ibmMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "Aswin Salish | Portfolio",
   description: "Motorsport Minimalism - High-end digital experiences.",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default function RootLayout({

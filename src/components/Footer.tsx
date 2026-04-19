@@ -44,10 +44,19 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <span className="font-mono text-[10px] uppercase text-foreground/40">Socials</span>
             <ul className="flex flex-col gap-2">
-              {["Instagram", "Twitter / X", "LinkedIn", "Github"].map((item) => (
-                <li key={item}>
-                  <a href="#" className="font-header text-sm tracking-tighter hover:text-accent uppercase">
-                    {item}
+              {[
+                { name: "Instagram", url: "https://www.instagram.com/aswin_salish/" },
+                { name: "LinkedIn", url: "https://www.linkedin.com/in/aswinsalish/" },
+                { name: "Github", url: "https://github.com/aswinsalishgit" },
+              ].map((item) => (
+                <li key={item.name}>
+                  <a 
+                    href={item.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="font-header text-sm tracking-tighter hover:text-accent uppercase"
+                  >
+                    {item.name}
                   </a>
                 </li>
               ))}
