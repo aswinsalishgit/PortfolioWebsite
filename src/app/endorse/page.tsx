@@ -3,6 +3,8 @@ import PageReveal from "@/components/PageReveal";
 import EndorsementList from "@/components/EndorsementList";
 import EndorsementForm from "@/components/EndorsementForm";
 
+export const dynamic = "force-dynamic";
+
 export default function EndorsePage() {
   return (
     <PageReveal>

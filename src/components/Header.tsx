@@ -20,11 +20,8 @@ export default function Header() {
 
   // Close menu on route change
   useEffect(() => {
-    if (isOpen) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsOpen(false);
-    }
-  }, [pathname, isOpen]);
+    setIsOpen(false);
+  }, [pathname]);
 
   // Handle body scroll locking
   useEffect(() => {
