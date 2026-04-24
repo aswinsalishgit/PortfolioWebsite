@@ -119,7 +119,7 @@ export default function Header() {
       {/* Mobile Menu Overlay */}
       <div 
         className={`fixed inset-0 bg-black z-[100] transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] md:hidden ${
-          isOpen ? "translate-y-0" : "-translate-y-full"
+          isOpen ? "translate-y-0 opacity-100 pointer-events-auto" : "-translate-y-full opacity-0 pointer-events-none"
         }`}
       >
         <div className="flex flex-col h-full p-8 pt-40 gap-10">

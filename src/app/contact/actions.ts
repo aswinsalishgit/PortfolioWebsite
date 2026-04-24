@@ -13,7 +13,7 @@ export async function submitInquiry(formData: FormData) {
   const message = (formData.get("message") as string) || "";
 
   if (!name || !email || !role || !message) {
-    throw new Error("Missing required fields");
+    return { success: false, error: "Missing required fields" };
   }
 
   // 1. Store in Supabase
@@ -25,7 +25,7 @@ export async function submitInquiry(formData: FormData) {
 
   if (error) {
     console.error("Supabase Error:", error);
-    throw new Error("Failed to log mission parameters.");
+    return { success: false, error: "Failed to log mission parameters." };
   }
 
   // 2. Send Email Notification via Resend
@@ -76,5 +76,5 @@ export async function submitInquiry(formData: FormData) {
     console.error("Resend Error:", emailError);
   }
 
-  redirect("/contact/success");
+  return { success: true };
 }

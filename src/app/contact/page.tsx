@@ -1,20 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { submitInquiry } from "./actions";
 import PageReveal from "@/components/PageReveal";
+import { useRouter } from "next/navigation";
+import { useLiveLocationAndTime } from "@/hooks/useLiveLocationAndTime";
 
 export default function ContactPage() {
-  const [time, setTime] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (time === "") {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setTime(new Date().toLocaleTimeString());
-    }
-  }, [time]);
+  const router = useRouter();
+  const { timeStr, mounted } = useLiveLocationAndTime();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,7 +19,13 @@ export default function ContactPage() {
 
     const formData = new FormData(e.currentTarget);
     try {
-      await submitInquiry(formData);
+      const result = await submitInquiry(formData);
+      if (result?.success) {
+        router.push("/contact/success");
+      } else if (result?.error) {
+        setError(result.error);
+        setIsSubmitting(false);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Transmission failed.");
       setIsSubmitting(false);
@@ -150,7 +152,7 @@ export default function ContactPage() {
         <div className="mt-20 border-t border-white/10 pt-8 flex justify-between items-center font-mono text-[10px] text-foreground/20 uppercase">
           <span>Security Protocol: Encrypted</span>
           <span>Buffer Status: Ready</span>
-          <span className="hidden md:block">Time: {time}</span>
+          <span className="hidden md:block">Time: {mounted ? timeStr : "--:--:--"}</span>
         </div>
       </div>
     </section>

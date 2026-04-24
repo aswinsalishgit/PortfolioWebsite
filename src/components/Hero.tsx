@@ -5,11 +5,13 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LazyVideo from "./LazyVideo";
+import { useLiveLocationAndTime } from "@/hooks/useLiveLocationAndTime";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const container = useRef<HTMLDivElement>(null);
+  const { timeStr, locationStr, mounted } = useLiveLocationAndTime("19.0760° N, 72.8777° E");
 
   useGSAP(
     () => {
@@ -132,11 +134,11 @@ export default function Hero() {
           <div className="md:col-span-8 flex justify-end items-end gap-12 mt-8 md:mt-0">
             <div className="flex flex-col items-end gap-1">
               <span className="font-mono text-[10px] text-foreground/30 uppercase">Coordinates</span>
-              <span className="font-mono text-[10px] text-foreground/60">19.0760° N, 72.8777° E</span>
+              <span className="font-mono text-[10px] text-foreground/60">{mounted ? locationStr : "19.0760° N, 72.8777° E"}</span>
             </div>
             <div className="flex flex-col items-end gap-1">
               <span className="font-mono text-[10px] text-foreground/30 uppercase">Local Time</span>
-              <span className="font-mono text-[10px] text-foreground/60 uppercase">17:45 GMT+5:30</span>
+              <span className="font-mono text-[10px] text-foreground/60 uppercase">{mounted ? timeStr : "17:45"}</span>
             </div>
           </div>
         </div>

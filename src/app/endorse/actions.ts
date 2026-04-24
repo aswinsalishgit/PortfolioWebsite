@@ -9,7 +9,7 @@ export async function submitEndorsement(formData: FormData) {
   const message = (formData.get("message") as string) || "";
 
   if (!name || !role || !message) {
-    throw new Error("Missing required fields");
+    return { success: false, error: "Missing required fields" };
   }
 
   const { error } = await supabase
@@ -20,7 +20,7 @@ export async function submitEndorsement(formData: FormData) {
 
   if (error) {
     console.error("Supabase Error:", error);
-    throw new Error("Failed to store endorsement.");
+    return { success: false, error: "Failed to store endorsement." };
   }
 
   revalidatePath("/");

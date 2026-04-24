@@ -4,19 +4,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLenis } from "./SmoothScroll";
+import { useLiveLocationAndTime } from "@/hooks/useLiveLocationAndTime";
 
 export default function Footer() {
-  const [mounted, setMounted] = useState(false);
   const currentYear = new Date().getFullYear();
   const pathname = usePathname();
   const lenis = useLenis();
-
-  useEffect(() => {
-    if (!mounted) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setMounted(true);
-    }
-  }, [mounted]);
+  const { timeStr, locationStr, mounted } = useLiveLocationAndTime("40.7128° N, 74.0060° W");
 
   const handleStartProjectClick = (e: React.MouseEvent) => {
     if (pathname === "/contact" && lenis) {
@@ -96,8 +90,8 @@ export default function Footer() {
           DESIGNED & DEVELOPED BY ASWIN SALISH &copy; {currentYear}
         </div>
         <div className="flex gap-8 font-mono text-[10px] uppercase">
-          <span>Local Time: {mounted ? new Date().toLocaleTimeString() : "--:--:--"}</span>
-          <span>40.7128&deg; N, 74.0060&deg; W</span>
+          <span>Local Time: {mounted ? timeStr : "--:--:--"}</span>
+          <span>{mounted ? locationStr : "40.7128° N, 74.0060° W"}</span>
         </div>
       </div>
     </footer>

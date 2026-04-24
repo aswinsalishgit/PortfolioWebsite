@@ -16,8 +16,12 @@ export default function EndorsementForm() {
 
     const formData = new FormData(e.currentTarget);
     try {
-      await submitEndorsement(formData);
-      setSubmitted(true);
+      const result = await submitEndorsement(formData);
+      if (result?.success) {
+        setSubmitted(true);
+      } else if (result?.error) {
+        setError(result.error);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to log endorsement.");
     } finally {
