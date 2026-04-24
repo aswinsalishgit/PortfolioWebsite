@@ -20,8 +20,11 @@ export default function Header() {
 
   // Close menu on route change
   useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
+    if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setIsOpen(false);
+    }
+  }, [pathname, isOpen]);
 
   // Handle body scroll locking
   useEffect(() => {
@@ -127,7 +130,7 @@ export default function Header() {
                 href={link.href}
                 className="flex items-baseline gap-4 group"
               >
-                <span className="font-mono text-accent text-[10px]">0{i + 1} //</span>
+                <span className="font-mono text-accent text-[10px]">0{i + 1} {'//'}</span>
                 <span className="text-6xl font-header uppercase tracking-tighter group-hover:text-accent transition-colors">
                   {link.name}
                 </span>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, createContext, useContext } from "react";
+import { useEffect, createContext, useContext, useState } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import gsap from "gsap";
@@ -13,11 +13,11 @@ const LenisContext = createContext<Lenis | null>(null);
 export const useLenis = () => useContext(LenisContext);
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
-  const lenisRef = useRef<Lenis | null>(null);
+  const [lenis, setLenis] = useState<Lenis | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
-    const lenis = new Lenis({
+    const lenisInstance = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
@@ -27,46 +27,47 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       lerp: 0.05,
     });
 
-    lenisRef.current = lenis;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setLenis(lenisInstance);
 
     const update = (time: number) => {
-      lenis.raf(time * 1000);
+      lenisInstance.raf(time * 1000);
     };
 
     gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
 
-    lenis.on("scroll", ScrollTrigger.update);
+    lenisInstance.on("scroll", ScrollTrigger.update);
 
     const handleResize = () => {
-      lenis.resize();
+      lenisInstance.resize();
     };
     window.addEventListener("resize", handleResize);
 
     // Initial refresh with a slight delay for Next.js layout settlement
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
-      lenis.resize();
+      lenisInstance.resize();
     }, 100);
 
     return () => {
-      lenis.destroy();
+      lenisInstance.destroy();
       gsap.ticker.remove(update);
       window.removeEventListener("resize", handleResize);
       clearTimeout(timer);
-      lenisRef.current = null;
+      setLenis(null);
     };
   }, []);
 
   // Reset scroll to top on route change
   useEffect(() => {
-    if (lenisRef.current) {
-      lenisRef.current.scrollTo(0, { immediate: true });
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
     }
-  }, [pathname]);
+  }, [pathname, lenis]);
 
   return (
-    <LenisContext.Provider value={lenisRef.current}>
+    <LenisContext.Provider value={lenis}>
       {children}
     </LenisContext.Provider>
   );

@@ -2,7 +2,7 @@
 
 import React from "react";
 import PageReveal from "@/components/PageReveal";
-import { Download, ExternalLink, Mail, Phone, MapPin } from "lucide-react";
+import { Download, ExternalLink, Mail, MapPin } from "lucide-react";
 
 export default function RecruitPage() {
   const skills = [
@@ -82,7 +82,7 @@ export default function RecruitPage() {
               <div className="flex flex-col gap-2">
                 <h2 className="text-3xl font-header uppercase tracking-tighter text-white">Summary</h2>
                 <p className="font-mono text-sm text-foreground/60 leading-relaxed max-w-2xl">
-                  A multi-disciplinary developer dedicated to pushing the boundaries of web aesthetics. I specialize in building "Mechanical Minimalist" interfaces that don't just work well, but feel physical and high-performance.
+                  A multi-disciplinary developer dedicated to pushing the boundaries of web aesthetics. I specialize in building &quot;Mechanical Minimalist&quot; interfaces that don&apos;t just work well, but feel physical and high-performance.
                 </p>
               </div>
 

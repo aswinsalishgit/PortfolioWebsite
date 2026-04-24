@@ -21,13 +21,14 @@ export default function LazyVideo({ src, poster, className = "" }: LazyVideoProp
       { threshold: 0.1 }
     );
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
+    const currentContainer = containerRef.current;
+    if (currentContainer) {
+      observer.observe(currentContainer);
     }
 
     return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
+      if (currentContainer) {
+        observer.unobserve(currentContainer);
       }
     };
   }, []);

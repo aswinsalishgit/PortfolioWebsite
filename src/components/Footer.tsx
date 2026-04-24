@@ -12,8 +12,11 @@ export default function Footer() {
   const lenis = useLenis();
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    if (!mounted) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setMounted(true);
+    }
+  }, [mounted]);
 
   const handleStartProjectClick = (e: React.MouseEvent) => {
     if (pathname === "/contact" && lenis) {
@@ -27,7 +30,7 @@ export default function Footer() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
         <div>
           <h2 className="text-4xl md:text-6xl font-header mb-8 leading-none">
-            Let's build <br /> <span className="text-accent">something raw.</span>
+            Let&apos;s build <br /> <span className="text-accent">something raw.</span>
           </h2>
           <p className="font-mono text-sm max-w-sm text-foreground/60 mb-8">
             Specializing in high-performance digital experiences where engineering meets extreme minimalism.

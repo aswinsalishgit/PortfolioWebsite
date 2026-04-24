@@ -1,8 +1,16 @@
 import React from "react";
 import { getEndorsements } from "@/app/endorse/actions";
 
+interface Endorsement {
+  id: string;
+  name: string;
+  role: string;
+  message: string;
+  created_at: string;
+}
+
 export default async function EndorsementList() {
-  const endorsements = await getEndorsements();
+  const endorsements = await getEndorsements() as unknown as Endorsement[];
 
   if (endorsements.length === 0) {
     return (
@@ -21,7 +29,7 @@ export default async function EndorsementList() {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {endorsements.map((endorsement: any) => (
+        {endorsements.map((endorsement) => (
           <div key={endorsement.id} className="border-brutal p-6 bg-white/[0.02] flex flex-col gap-4 relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-30 transition-opacity">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -30,7 +38,7 @@ export default async function EndorsementList() {
             </div>
             
             <p className="font-mono text-xs text-foreground/80 leading-relaxed italic">
-              "{endorsement.message}"
+              &quot;{endorsement.message}&quot;
             </p>
             
             <div className="mt-auto pt-4 border-t border-white/5 flex flex-col gap-1">

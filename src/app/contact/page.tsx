@@ -10,8 +10,11 @@ export default function ContactPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setTime(new Date().toLocaleTimeString());
-  }, []);
+    if (time === "") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setTime(new Date().toLocaleTimeString());
+    }
+  }, [time]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -39,7 +39,7 @@ export default function SuccessPage() {
 
         {/* Decorative elements */}
         <div className="absolute bottom-4 right-4 font-mono text-[8px] text-foreground/10 uppercase">
-          Status: Data_Persisted // ID: {Math.random().toString(36).substring(7).toUpperCase()}
+          Status: Data_Persisted // ID: SYSTEM_LOG_ACK
         </div>
       </div>
     </section>
