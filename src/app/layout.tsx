@@ -23,6 +23,7 @@ const ibmMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://aswinsalish.me"),
   title: "ASWIN SALISH | CREATIVE DEVELOPER",
   description: "High-performance digital architectures where motorsport engineering meets brutalist minimalism.",
   icons: {
