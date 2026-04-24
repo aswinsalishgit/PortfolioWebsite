@@ -61,7 +61,11 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-50 border-b-brutal bg-background/80 backdrop-blur-md">
+      <header className={`fixed top-0 left-0 w-full transition-all duration-300 ${
+        isOpen 
+          ? "z-[110] bg-transparent border-transparent" 
+          : "z-50 border-b-brutal bg-background/80 backdrop-blur-md"
+      }`}>
         <div className="flex items-center px-6 py-4">
           {/* Left Section: Logo */}
           <div className="flex-1">
@@ -106,7 +110,8 @@ export default function Header() {
             </a>
             <button 
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden w-8 h-8 flex flex-col items-end justify-center gap-1.5 group relative z-[110]"
+              className="md:hidden w-12 h-12 flex flex-col items-end justify-center gap-1.5 group relative"
+              aria-label="Toggle menu"
             >
               <div className={`h-[1px] bg-foreground group-hover:bg-accent transition-all duration-300 ${isOpen ? "w-8 rotate-45 translate-y-[4px]" : "w-8"}`} />
               <div className={`h-[1px] bg-foreground group-hover:bg-accent transition-all duration-300 ${isOpen ? "opacity-0" : "w-6"}`} />
