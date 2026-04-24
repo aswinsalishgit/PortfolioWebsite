@@ -1,14 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useLenis } from "./SmoothScroll";
 
 export default function Footer() {
   const [mounted, setMounted] = useState(false);
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+  const lenis = useLenis();
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handleStartProjectClick = (e: React.MouseEvent) => {
+    if (pathname === "/contact" && lenis) {
+      e.preventDefault();
+      lenis.scrollTo(0);
+    }
+  };
 
   return (
     <footer className="w-full border-t-brutal bg-background pt-20 pb-10 px-6">
@@ -20,23 +32,33 @@ export default function Footer() {
           <p className="font-mono text-sm max-w-sm text-foreground/60 mb-8">
             Specializing in high-performance digital experiences where engineering meets extreme minimalism.
           </p>
-          <a 
-            href="mailto:hello@aswinsalish.me" 
+          <Link 
+            href="/contact" 
+            onClick={handleStartProjectClick}
             className="inline-block border-brutal px-8 py-4 font-header tracking-widest hover:bg-white hover:text-black transition-all"
           >
             START PROJECT
-          </a>
+          </Link>
         </div>
         
         <div className="grid grid-cols-2 gap-8">
           <div className="flex flex-col gap-4">
             <span className="font-mono text-[10px] uppercase text-foreground/40">Navigation</span>
             <ul className="flex flex-col gap-2">
-              {["Work", "Archive", "Journal", "Info"].map((item) => (
-                <li key={item}>
-                  <a href="#" className="font-header text-sm tracking-tighter hover:text-accent uppercase">
-                    {item}
-                  </a>
+              {[
+                { name: "Recruit", href: "/recruit" },
+                { name: "Articles", href: "/articles" },
+                { name: "Projects", href: "/projects" },
+                { name: "Endorse", href: "/endorse" },
+                { name: "Subscribe", href: "/subscribe" },
+              ].map((item) => (
+                <li key={item.name}>
+                  <Link 
+                    href={item.href} 
+                    className="font-header text-sm tracking-tighter hover:text-accent uppercase transition-colors"
+                  >
+                    {item.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -48,6 +70,7 @@ export default function Footer() {
                 { name: "Instagram", url: "https://www.instagram.com/aswin_salish/" },
                 { name: "LinkedIn", url: "https://www.linkedin.com/in/aswinsalish/" },
                 { name: "Github", url: "https://github.com/aswinsalishgit" },
+                { name: "X", url: "https://x.com/AswinSalish" },
               ].map((item) => (
                 <li key={item.name}>
                   <a 
@@ -68,9 +91,6 @@ export default function Footer() {
       <div className="flex flex-col md:flex-row justify-between items-end border-t-brutal pt-8 gap-4">
         <div className="font-mono text-[10px] uppercase text-foreground/40">
           DESIGNED & DEVELOPED BY ASWIN SALISH &copy; {currentYear}
-        </div>
-        <div className="font-huge opacity-[0.03] absolute bottom-0 right-0 pointer-events-none select-none">
-          MOTORS
         </div>
         <div className="flex gap-8 font-mono text-[10px] uppercase">
           <span>Local Time: {mounted ? new Date().toLocaleTimeString() : "--:--:--"}</span>

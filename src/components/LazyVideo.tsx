@@ -10,6 +10,7 @@ interface LazyVideoProps {
 
 export default function LazyVideo({ src, poster, className = "" }: LazyVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
@@ -20,13 +21,13 @@ export default function LazyVideo({ src, poster, className = "" }: LazyVideoProp
       { threshold: 0.1 }
     );
 
-    if (videoRef.current) {
-      observer.observe(videoRef.current);
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
     }
 
     return () => {
-      if (videoRef.current) {
-        observer.unobserve(videoRef.current);
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
       }
     };
   }, []);
@@ -34,28 +35,26 @@ export default function LazyVideo({ src, poster, className = "" }: LazyVideoProp
   useEffect(() => {
     if (videoRef.current) {
       if (isInView) {
-        videoRef.current.play().catch(() => {
-          // Handle autoplay block
-          console.warn("Autoplay blocked. User interaction may be required.");
-        });
+        videoRef.current.play().catch(() => {});
       } else {
         videoRef.current.pause();
       }
     }
   }, [isInView]);
 
-  return isInView ? (
-    <video
-      ref={videoRef}
-      src={src}
-      poster={poster}
-      className={`object-cover w-full h-full ${className}`}
-      muted
-      loop
-      playsInline
-      autoPlay
-    />
-  ) : (
-    <div className={`bg-black w-full h-full ${className}`} />
+  return (
+    <div ref={containerRef} className={`relative w-full h-full overflow-hidden ${className}`}>
+      <video
+        ref={videoRef}
+        src={src}
+        poster={poster}
+        className={`object-cover w-full h-full transition-opacity duration-1000 ${isInView ? "opacity-100" : "opacity-0"}`}
+        muted
+        loop
+        playsInline
+        autoPlay
+      />
+      {!isInView && <div className="absolute inset-0 bg-black" />}
+    </div>
   );
 }

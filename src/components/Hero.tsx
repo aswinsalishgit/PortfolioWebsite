@@ -86,7 +86,7 @@ export default function Hero() {
         <div className="flex flex-col gap-0">
           <div className="overflow-hidden mb-2">
             <span className="hero-accent font-mono text-xs md:text-sm text-accent uppercase tracking-[0.4em] block">
-              [SYSTEM_STATUS: ONLINE] // EST. 2026
+              CREATIVE DEVELOPER // PORTFOLIO 2026
             </span>
           </div>
           
@@ -100,12 +100,26 @@ export default function Hero() {
               <h1 className="hero-line text-[15vw] md:text-[12vw] font-header leading-[0.8] text-white uppercase tracking-tighter">
                 SALISH
               </h1>
-              <div className="hero-accent hidden lg:flex flex-col items-end gap-2 pb-4">
-                <div className="w-24 h-[1px] bg-accent" />
-                <span className="font-mono text-[10px] text-accent/60 uppercase">
-                  Precision Engineering
+              <button 
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({
+                      title: 'Aswin Salish | Creative Developer',
+                      text: 'Check out the portfolio of Aswin Salish, a Creative Developer specializing in high-performance digital experiences.',
+                      url: window.location.origin,
+                    });
+                  } else {
+                    navigator.clipboard.writeText(window.location.origin);
+                    alert("Profile link copied to clipboard!");
+                  }
+                }}
+                className="hero-accent group hidden lg:flex flex-col items-end gap-2 pb-4 pointer-events-auto cursor-pointer"
+              >
+                <div className="w-24 h-[1px] bg-accent group-hover:w-32 transition-all duration-500" />
+                <span className="font-mono text-[10px] text-accent/60 uppercase group-hover:text-accent transition-colors">
+                  SHARE MY PROFILE
                 </span>
-              </div>
+              </button>
             </div>
           </div>
         </div>
@@ -119,7 +133,7 @@ export default function Hero() {
           <div className="md:col-span-8 flex justify-end items-end gap-12 mt-8 md:mt-0">
             <div className="flex flex-col items-end gap-1">
               <span className="font-mono text-[10px] text-foreground/30 uppercase">Coordinates</span>
-              <span className="font-mono text-[10px] text-foreground/60">40.7128° N, 74.0060° W</span>
+              <span className="font-mono text-[10px] text-foreground/60">19.0760° N, 72.8777° E</span>
             </div>
             <div className="flex flex-col items-end gap-1">
               <span className="font-mono text-[10px] text-foreground/30 uppercase">Local Time</span>

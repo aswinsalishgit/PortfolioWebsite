@@ -2,34 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { projects, Project } from "@/data/projects";
 
-const projects = [
-  {
-    id: "01",
-    title: "Aerodynamics Prototype",
-    category: "Industrial Design",
-    image: "/project-1.jpeg",
-    span: "md:col-span-12",
-  },
-  {
-    id: "02",
-    title: "Cockpit Interface",
-    category: "UI/UX Engineering",
-    image: "/project-2.jpeg",
-    span: "md:col-span-7",
-  },
-  {
-    id: "03",
-    title: "Thermal Braking",
-    category: "Technical Visualization",
-    image: "/project-3.jpeg",
-    span: "md:col-span-5",
-  },
-];
-
-function ProjectItem({ project }: { project: typeof projects[0] }) {
+function ProjectItem({ project, priority = false, span = "" }: { project: Project, priority?: boolean, span?: string }) {
   return (
-    <div className={`group relative overflow-hidden border-brutal bg-black cursor-crosshair ${project.span}`}>
+    <Link 
+      href={`/projects/${project.slug}`}
+      className={`group relative overflow-hidden border-brutal bg-black cursor-crosshair ${span}`}
+    >
       {/* Detail Label (Top Left) */}
       <div className="absolute top-4 left-4 z-20 flex flex-col gap-0 pointer-events-none">
         <span className="font-mono text-[10px] text-accent font-bold bg-black px-2 mb-1">
@@ -41,19 +21,19 @@ function ProjectItem({ project }: { project: typeof projects[0] }) {
       </div>
 
       {/* Image Container */}
-      <div className="relative aspect-[16/10] md:aspect-auto md:h-[60vh] overflow-hidden transition-all duration-300">
+      <div className="relative aspect-[16/10] md:aspect-auto md:h-[60vh] overflow-hidden transition-all duration-700 ease-out">
         <Image
           src={project.image}
           alt={project.title}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover grayscale transition-all duration-150 group-hover:grayscale-0 group-hover:scale-105"
+          priority={priority}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+          className="object-cover transition-all duration-700 ease-out group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-150" />
       </div>
 
-      {/* Ticker-tape Marquee (Bottom) */}
-      <div className="absolute bottom-0 left-0 w-full bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-30 pointer-events-none translate-y-full group-hover:translate-y-0 transform transition-transform border-t-brutal">
+      {/* Ticker-tape Marquee (Bottom) - Toxic Yellow Band */}
+      <div className="absolute bottom-0 left-0 w-full bg-accent opacity-0 group-hover:opacity-100 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] z-30 pointer-events-none translate-y-full group-hover:translate-y-0 transform border-t-brutal">
         <div className="flex overflow-hidden whitespace-nowrap py-3">
           <div className="animate-marquee flex gap-4 pr-4">
             {[...Array(10)].map((_, i) => (
@@ -71,28 +51,38 @@ function ProjectItem({ project }: { project: typeof projects[0] }) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
-export default function ProjectShowcase() {
+export default function ProjectShowcase({ hideHeader = false }: { hideHeader?: boolean }) {
+  const spans = ["md:col-span-12", "md:col-span-7", "md:col-span-5"];
+
   return (
-    <section className="py-20">
-      <div className="px-6 mb-12 flex justify-between items-end border-b-brutal pb-8">
-        <div>
-          <span className="font-mono text-[10px] text-accent uppercase tracking-widest block mb-2">Selected Works</span>
-          <h2 className="text-4xl md:text-6xl font-header leading-none">PROJECT <br /> SHOWCASE</h2>
+    <section id="projects" className="py-20">
+      {!hideHeader && (
+        <div className="px-6 mb-12 flex justify-between items-end border-b-brutal pb-8">
+          <div>
+            <span className="font-mono text-[10px] text-accent uppercase tracking-widest block mb-2">Selected Works</span>
+            <h2 className="text-4xl md:text-6xl font-header leading-none">PROJECT <br /> SHOWCASE</h2>
+          </div>
+          <div className="hidden md:block text-right">
+            <span className="font-mono text-[10px] text-foreground/40 uppercase">Filter: High Performance</span>
+          </div>
         </div>
-        <div className="hidden md:block text-right">
-          <span className="font-mono text-[10px] text-foreground/40 uppercase">Filter: High Performance</span>
-        </div>
-      </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-0 border-brutal bg-border-brutal overflow-hidden">
-        {projects.map((project) => (
-          <ProjectItem key={project.id} project={project} />
+        {projects.map((project, index) => (
+          <ProjectItem 
+            key={project.id} 
+            project={project} 
+            priority={index === 0} 
+            span={spans[index] || "md:col-span-6"}
+          />
         ))}
       </div>
     </section>
   );
 }
+

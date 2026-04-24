@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
+import { PageTransitionProvider } from "@/components/PageTransitionContext";
 
 const syne = Syne({
   variable: "--font-syne",
@@ -22,10 +23,32 @@ const ibmMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aswin Salish | Portfolio",
-  description: "Motorsport Minimalism - High-end digital experiences.",
+  title: "ASWIN SALISH | CREATIVE DEVELOPER",
+  description: "High-performance digital architectures where motorsport engineering meets brutalist minimalism.",
   icons: {
     icon: "/icon.png",
+  },
+  openGraph: {
+    title: "ASWIN SALISH | CREATIVE DEVELOPER",
+    description: "High-performance digital architectures where motorsport engineering meets brutalist minimalism.",
+    url: "https://aswinsalish.me",
+    siteName: "Aswin Salish Portfolio",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Aswin Salish | Portfolio Banner",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ASWIN SALISH | CREATIVE DEVELOPER",
+    description: "High-performance digital architectures where motorsport engineering meets brutalist minimalism.",
+    images: ["/og-image.png"],
   },
 };
 
@@ -35,15 +58,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-background text-foreground h-full selection:bg-accent selection:text-black">
+    <html lang="en" className="bg-background text-foreground selection:bg-accent selection:text-black">
       <body className={`${syne.variable} ${spaceGrotesk.variable} ${ibmMono.variable} min-h-screen font-body flex flex-col`}>
         <div className="noise-overlay" />
         <SmoothScroll>
           <Header />
           <nav className="h-20" /> {/* Spacer for fixed header */}
-          <main className="flex-grow">
-            {children}
-          </main>
+          <PageTransitionProvider>
+            <main className="flex-grow">
+              {children}
+            </main>
+          </PageTransitionProvider>
           <Footer />
         </SmoothScroll>
       </body>
