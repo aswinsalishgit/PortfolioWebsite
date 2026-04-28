@@ -85,9 +85,12 @@ export default function Hero() {
       {/* Hero Content */}
       <div className="relative z-10 w-full px-6 md:px-12 pointer-events-none">
         <div className="flex flex-col gap-0">
-          <div className="overflow-hidden mb-2">
+          <div className="overflow-hidden mb-2 flex items-center justify-between">
             <span className="hero-accent font-mono text-xs md:text-sm text-accent uppercase tracking-[0.4em] block">
               CREATIVE DEVELOPER // PORTFOLIO 2026
+            </span>
+            <span className="hero-accent font-mono text-[8px] md:text-[10px] text-foreground/30 uppercase tracking-widest hidden md:block">
+              Purpose: Digital Architecture & Talent Discovery System
             </span>
           </div>
           
