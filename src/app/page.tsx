@@ -34,7 +34,24 @@ export default function Home() {
           </div>
         </ScrollReveal>
 
-        <ScrollReveal className="mt-20">
+        <ScrollReveal className="mt-40">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-white/10 pt-20">
+            <div className="flex flex-col gap-2">
+              <span className="font-mono text-accent text-[10px] tracking-[0.3em] uppercase">[SYSTEM_MANIFESTO]</span>
+              <h2 className="text-4xl md:text-6xl font-header leading-none uppercase tracking-tighter">Raw <br /> Engineering.</h2>
+            </div>
+            <div className="flex flex-col gap-6">
+              <p className="font-mono text-sm md:text-base leading-relaxed text-foreground/60 uppercase">
+                A digital archive and high-performance technical exhibition. This platform serves as a nexus where motorsport-inspired engineering meets brutalist minimalism, showcasing a portfolio of creative development, digital architectures, and experimental interface design.
+              </p>
+              <p className="font-mono text-sm md:text-base leading-relaxed text-foreground/60 uppercase border-l border-accent pl-6">
+                Every line of code is optimized for raw performance and aesthetic precision. This is not just a portfolio; it is a live system feed of technical excellence and creative exploration.
+              </p>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal className="mt-40">
           <ProjectShowcase />
         </ScrollReveal>
 

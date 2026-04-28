@@ -89,9 +89,13 @@ export default function Footer() {
         <div className="font-mono text-[10px] uppercase text-foreground/40">
           DESIGNED & DEVELOPED BY ASWIN SALISH &copy; {currentYear}
         </div>
-        <div className="flex gap-8 font-mono text-[10px] uppercase">
-          <span>Local Time: {mounted ? timeStr : "--:--:--"}</span>
-          <span>{mounted ? locationStr : "40.7128° N, 74.0060° W"}</span>
+        <div className="flex flex-wrap gap-8 font-mono text-[10px] uppercase">
+          <Link href="/policy" className="hover:text-accent transition-colors">Privacy Policy</Link>
+          <Link href="/terms" className="hover:text-accent transition-colors">Terms & Conditions</Link>
+          <div className="flex gap-8">
+            <span>Local Time: {mounted ? timeStr : "--:--:--"}</span>
+            <span>{mounted ? locationStr : "40.7128° N, 74.0060° W"}</span>
+          </div>
         </div>
       </div>
     </footer>
